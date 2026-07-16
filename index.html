@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Studio — Multi-Agent AI Orchestration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface-2: #1a1a25;
+            --border: #2a2a3a;
+            --text: #e0e0e8;
+            --text-dim: #8888a0;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --green: #22c55e;
+            --yellow: #eab308;
+            --blue: #3b82f6;
+            --purple: #a855f7;
+            --orange: #f97316;
+            --pink: #ec4899;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse 600px 400px at 30% 40%, rgba(99, 102, 241, 0.08), transparent),
+                radial-gradient(ellipse 500px 300px at 70% 60%, rgba(168, 85, 247, 0.06), transparent);
+            pointer-events: none;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+        
+        .badge .dot {
+            width: 8px; height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a0a0c0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+        
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            background: #5558e6;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+        
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        
+        .section-desc {
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Agent Grid */
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .agent-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: all 0.3s;
+        }
+        
+        .agent-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .agent-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .agent-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .agent-role {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+        
+        .agent-card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .agent-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tag {
+            padding: 0.25rem 0.6rem;
+            background: var(--surface-2);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+        
+        /* Stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Workflow */
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .step {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .step-num {
+            position: absolute;
+            left: 0;
+            width: 2rem; height: 2rem;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .step h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+        
+        /* Capabilities */
+        .cap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .cap-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .cap-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .cap-card p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+        
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            section { padding: 4rem 1.5rem; }
+            .agent-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Hero -->
+    <div class="hero">
+        <div class="badge">
+            <span class="dot"></span>
+            All systems operational
+        </div>
+        <h1>Agent Studio</h1>
+        <p>A multi-agent AI orchestration system that plans, delegates, builds, reviews, and ships — autonomously.</p>
+        <div class="cta-group">
+            <a href="#agents" class="btn btn-primary">Meet the Team</a>
+            <a href="https://github.com/JKRONIN" class="btn btn-ghost" target="_blank">GitHub →</a>
+        </div>
+    </div>
+    
+    <!-- Stats -->
+    <section>
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Active Agents</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Skills Loaded</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Deliverables Shipped</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Autonomous Operation</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Agents -->
+    <section id="agents">
+        <div class="section-label">The Team</div>
+        <div class="section-title">Six Agents, One Mission</div>
+        <div class="section-desc">Each agent has a distinct role. The Director plans and delegates. The workers build, review, and deploy.</div>
+        
+        <div class="agent-grid">
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon" style="background: rgba(99,102,241,0.15); color: var(--accent);">D</div>
+                    <div>
+                        <div class="agent-name">Hermes Director</div>
+                        <div class="agent-role">Orchestrator & Planner</div>
+                    </div>
+                </div>
+                <p>The brain. Plans projects, delegates tasks, tracks progress, reviews output, and reports results. Runs on MiMo Pro.</p>
+                <div class="agent-tags">
+                    <span class="tag">Planning</span>
+                    <span class="tag">Delegation</span>
+                    <span class="tag">Review</span>
+                    <span class="tag">Reporting</span>
+                </div>
+            </div>
+            
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon" style="background: rgba(236,72,153,0.15); color: var(--pink);">C</div>
+                    <div>
+                        <div class="agent-name">Claude Code</div>
+                        <div class="agent-role">Senior Engineer & Reviewer</div>
+                    </div>
+                </div>
+                <p>Deep code review, complex refactoring, architecture decisions. The senior engineer who catches what others miss.</p>
+                <div class="agent-tags">
+                    <span class="tag">Code Review</span>
+                    <span class="tag">Architecture</span>
+                    <span class="tag">Refactoring</span>
+                </div>
+            </div>
+            
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon" style="background: rgba(34,197,94,0.15); color: var(--green);">X</div>
+                    <div>
+                        <div class="agent-name">Codex</div>
+                        <div class="agent-role">Builder & Implementer</div>
+                    </div>
+                </div>
+                <p>Fast implementation. Takes specs and builds features, fixes bugs, and creates PRs. The ship machine.</p>
+                <div class="agent-tags">
+                    <span class="tag">Feature Build</span>
+                    <span class="tag">Bug Fixes</span>
+                    <span class="tag">PRs</span>
+                </div>
+            </div>
+            
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon" style="background: rgba(249,115,22,0.15); color: var(--orange);">T</div>
+                    <div>
+                        <div class="agent-name">Titan</div>
+                        <div class="agent-role">Server Operations</div>
+                    </div>
+                </div>
+                <p>VPS-side operations. Deployment, long-running processes, server infrastructure, and remote execution.</p>
+                <div class="agent-tags">
+                    <span class="tag">Deployment</span>
+                    <span class="tag">Server Ops</span>
+                    <span class="tag">Infrastructure</span>
+                </div>
+            </div>
+            
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon" style="background: rgba(59,130,246,0.15); color: var(--blue);">O</div>
+                    <div>
+                        <div class="agent-name">OpenCode</div>
+                        <div class="agent-role">Alt Builder (MiMo-backed)</div>
+                    </div>
+                </div>
+                <p>Alternative coding agent backed by MiMo. Handles parallel workstreams and overflow from the primary builder.</p>
+                <div class="agent-tags">
+                    <span class="tag">Parallel Build</span>
+                    <span class="tag">Overflow</span>
+                    <span class="tag">MiMo</span>
+                </div>
+            </div>
+            
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon" style="background: rgba(168,85,247,0.15); color: var(--purple);">H</div>
+                    <div>
+                        <div class="agent-name">Hermes Local</div>
+                        <div class="agent-role">Private & Offline</div>
+                    </div>
+                </div>
+                <p>Runs locally on Ollama. Handles lightweight tasks, offline work, and anything that needs to stay private.</p>
+                <div class="agent-tags">
+                    <span class="tag">Local</span>
+                    <span class="tag">Private</span>
+                    <span class="tag">Offline</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Workflow -->
+    <section>
+        <div class="section-label">How It Works</div>
+        <div class="section-title">From Idea to Shipped</div>
+        <div class="section-desc">The Director receives a goal, breaks it down, assigns work, reviews output, and delivers results.</div>
+        
+        <div class="workflow-steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Intake</h3>
+                <p>Understand what's needed. Ask clarifying questions if ambiguous. Define scope and constraints.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>Plan</h3>
+                <p>Break the goal into tasks. Assign each to the best-fit agent. Set priorities and deadlines.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>Delegate</h3>
+                <p>Dispatch tasks with clear instructions. Workers execute in parallel when possible.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h3>Review</h3>
+                <p>Verify output quality. Run tests. Check against requirements. Send back if needed.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">5</div>
+                <h3>Deliver</h3>
+                <p>Package and ship. Report what was built, what was learned, and what's next.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Capabilities -->
+    <section id="capabilities">
+        <div class="section-label">Capabilities</div>
+        <div class="section-title">What We Build</div>
+        <div class="section-desc">From code to content, automation to infrastructure.</div>
+        
+        <div class="cap-grid">
+            <div class="cap-card">
+                <h3>🔧 Full-Stack Development</h3>
+                <p>Web apps, APIs, CLI tools, mobile apps. From spec to deployment with automated review.</p>
+            </div>
+            <div class="cap-card">
+                <h3>🎬 AI Video Generation</h3>
+                <p>Automated Higgsfield video generation. Character-driven content, batch production, quality verification.</p>
+            </div>
+            <div class="cap-card">
+                <h3>📊 Data & Dashboards</h3>
+                <p>Financial data analysis, OpenBB integration, custom dashboards, automated reporting.</p>
+            </div>
+            <div class="cap-card">
+                <h3>🤖 Agent Orchestration</h3>
+                <p>Multi-agent systems, task routing, automated workflows, background job scheduling.</p>
+            </div>
+            <div class="cap-card">
+                <h3>📝 Content & Docs</h3>
+                <p>Technical documentation, presentations, reports, knowledge bases, wikis.</p>
+            </div>
+            <div class="cap-card">
+                <h3>⚡ Automation</h3>
+                <p>Cron jobs, monitoring, automated testing, CI/CD pipelines, scheduled workflows.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <div class="cta-section">
+        <h2>Ready to Build?</h2>
+        <p>Have a project, an idea, or a problem? The agents are standing by.</p>
+        <div class="cta-group">
+            <a href="https://github.com/JKRONIN" class="btn btn-primary" target="_blank">View on GitHub</a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>Agent Studio — Powered by Hermes Agent × Nous Research</p>
+    </footer>
+    
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Fade-in on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.agent-card, .step, .cap-card, .stat-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
