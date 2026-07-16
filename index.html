@@ -32,7 +32,6 @@
             overflow-x: hidden;
         }
         
-        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -137,7 +136,6 @@
             background: var(--accent-glow);
         }
         
-        /* Sections */
         section {
             padding: 6rem 2rem;
             max-width: 1200px;
@@ -166,7 +164,6 @@
             font-size: 1.1rem;
         }
         
-        /* Agent Grid */
         .agent-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -235,7 +232,6 @@
             color: var(--text-dim);
         }
         
-        /* Stats */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -264,7 +260,6 @@
             margin-top: 0.5rem;
         }
         
-        /* Workflow */
         .workflow-steps {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -300,7 +295,6 @@
             font-size: 0.9rem;
         }
         
-        /* Capabilities */
         .cap-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -327,7 +321,6 @@
             font-size: 0.85rem;
         }
         
-        /* CTA */
         .cta-section {
             text-align: center;
             padding: 6rem 2rem;
@@ -345,7 +338,6 @@
             margin-bottom: 2rem;
         }
         
-        /* Footer */
         footer {
             border-top: 1px solid var(--border);
             padding: 2rem;
@@ -354,7 +346,6 @@
             font-size: 0.85rem;
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
             section { padding: 4rem 1.5rem; }
             .agent-grid { grid-template-columns: 1fr; }
@@ -363,34 +354,32 @@
 </head>
 <body>
     
-    <!-- Hero -->
     <div class="hero">
         <div class="badge">
             <span class="dot"></span>
-            All systems operational
+            Open Source
         </div>
         <h1>Agent Studio</h1>
-        <p>A multi-agent AI orchestration system that plans, delegates, builds, reviews, and ships — autonomously.</p>
+        <p>A framework for multi-agent AI orchestration. Plan, delegate, build, review, and ship — with a team of specialized agents.</p>
         <div class="cta-group">
-            <a href="#agents" class="btn btn-primary">Meet the Team</a>
-            <a href="https://github.com/JKRONIN" class="btn btn-ghost" target="_blank">GitHub →</a>
+            <a href="#agents" class="btn btn-primary">See How It Works</a>
+            <a href="https://github.com/JKRONIN/agent-template" class="btn btn-ghost" target="_blank">Get the Template →</a>
         </div>
     </div>
     
-    <!-- Stats -->
     <section>
         <div class="stats-row">
             <div class="stat-card">
-                <div class="stat-number">6</div>
-                <div class="stat-label">Active Agents</div>
+                <div class="stat-number">N</div>
+                <div class="stat-label">Agents Per Team</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">40+</div>
-                <div class="stat-label">Skills Loaded</div>
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Skills You Can Add</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">100+</div>
-                <div class="stat-label">Deliverables Shipped</div>
+                <div class="stat-number">1</div>
+                <div class="stat-label">Config File To Start</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">24/7</div>
@@ -399,22 +388,21 @@
         </div>
     </section>
     
-    <!-- Agents -->
     <section id="agents">
-        <div class="section-label">The Team</div>
-        <div class="section-title">Six Agents, One Mission</div>
-        <div class="section-desc">Each agent has a distinct role. The Director plans and delegates. The workers build, review, and deploy.</div>
+        <div class="section-label">Architecture</div>
+        <div class="section-title">Director + Workers</div>
+        <div class="section-desc">One agent plans and delegates. The rest execute. Add or remove workers to fit your needs.</div>
         
         <div class="agent-grid">
             <div class="agent-card">
                 <div class="agent-header">
                     <div class="agent-icon" style="background: rgba(99,102,241,0.15); color: var(--accent);">D</div>
                     <div>
-                        <div class="agent-name">Hermes Director</div>
-                        <div class="agent-role">Orchestrator & Planner</div>
+                        <div class="agent-name">Director</div>
+                        <div class="agent-role">Orchestrator</div>
                     </div>
                 </div>
-                <p>The brain. Plans projects, delegates tasks, tracks progress, reviews output, and reports results. Runs on MiMo Pro.</p>
+                <p>Receives requests, breaks them into tasks, assigns each to the best-fit worker, reviews output, and reports results.</p>
                 <div class="agent-tags">
                     <span class="tag">Planning</span>
                     <span class="tag">Delegation</span>
@@ -425,87 +413,86 @@
             
             <div class="agent-card">
                 <div class="agent-header">
-                    <div class="agent-icon" style="background: rgba(236,72,153,0.15); color: var(--pink);">C</div>
+                    <div class="agent-icon" style="background: rgba(34,197,94,0.15); color: var(--green);">B</div>
                     <div>
-                        <div class="agent-name">Claude Code</div>
-                        <div class="agent-role">Senior Engineer & Reviewer</div>
+                        <div class="agent-name">Builder</div>
+                        <div class="agent-role">Implementation</div>
                     </div>
                 </div>
-                <p>Deep code review, complex refactoring, architecture decisions. The senior engineer who catches what others miss.</p>
+                <p>Takes specs and builds features, writes code, creates tests. The worker that ships.</p>
                 <div class="agent-tags">
-                    <span class="tag">Code Review</span>
-                    <span class="tag">Architecture</span>
-                    <span class="tag">Refactoring</span>
+                    <span class="tag">Code</span>
+                    <span class="tag">Tests</span>
+                    <span class="tag">Features</span>
                 </div>
             </div>
             
             <div class="agent-card">
                 <div class="agent-header">
-                    <div class="agent-icon" style="background: rgba(34,197,94,0.15); color: var(--green);">X</div>
+                    <div class="agent-icon" style="background: rgba(236,72,153,0.15); color: var(--pink);">R</div>
                     <div>
-                        <div class="agent-name">Codex</div>
-                        <div class="agent-role">Builder & Implementer</div>
+                        <div class="agent-name">Reviewer</div>
+                        <div class="agent-role">Quality Gate</div>
                     </div>
                 </div>
-                <p>Fast implementation. Takes specs and builds features, fixes bugs, and creates PRs. The ship machine.</p>
+                <p>Checks code for security issues, performance problems, style consistency, and edge cases before it ships.</p>
                 <div class="agent-tags">
-                    <span class="tag">Feature Build</span>
-                    <span class="tag">Bug Fixes</span>
-                    <span class="tag">PRs</span>
+                    <span class="tag">Security</span>
+                    <span class="tag">Performance</span>
+                    <span class="tag">Style</span>
                 </div>
             </div>
             
             <div class="agent-card">
                 <div class="agent-header">
-                    <div class="agent-icon" style="background: rgba(249,115,22,0.15); color: var(--orange);">T</div>
+                    <div class="agent-icon" style="background: rgba(249,115,22,0.15); color: var(--orange);">S</div>
                     <div>
-                        <div class="agent-name">Titan</div>
-                        <div class="agent-role">Server Operations</div>
+                        <div class="agent-name">Deployer</div>
+                        <div class="agent-role">Infrastructure</div>
                     </div>
                 </div>
-                <p>VPS-side operations. Deployment, long-running processes, server infrastructure, and remote execution.</p>
+                <p>Handles server configuration, CI/CD pipelines, deployments, and infrastructure management.</p>
                 <div class="agent-tags">
-                    <span class="tag">Deployment</span>
-                    <span class="tag">Server Ops</span>
-                    <span class="tag">Infrastructure</span>
+                    <span class="tag">Server</span>
+                    <span class="tag">CI/CD</span>
+                    <span class="tag">Deploy</span>
                 </div>
             </div>
             
             <div class="agent-card">
                 <div class="agent-header">
-                    <div class="agent-icon" style="background: rgba(59,130,246,0.15); color: var(--blue);">O</div>
+                    <div class="agent-icon" style="background: rgba(59,130,246,0.15); color: var(--blue);">A</div>
                     <div>
-                        <div class="agent-name">OpenCode</div>
-                        <div class="agent-role">Alt Builder (MiMo-backed)</div>
+                        <div class="agent-name">Researcher</div>
+                        <div class="agent-role">Analysis</div>
                     </div>
                 </div>
-                <p>Alternative coding agent backed by MiMo. Handles parallel workstreams and overflow from the primary builder.</p>
+                <p>Gathers information, analyzes data, and writes documentation. The agent that figures things out.</p>
                 <div class="agent-tags">
-                    <span class="tag">Parallel Build</span>
-                    <span class="tag">Overflow</span>
-                    <span class="tag">MiMo</span>
+                    <span class="tag">Research</span>
+                    <span class="tag">Analysis</span>
+                    <span class="tag">Docs</span>
                 </div>
             </div>
             
             <div class="agent-card">
                 <div class="agent-header">
-                    <div class="agent-icon" style="background: rgba(168,85,247,0.15); color: var(--purple);">H</div>
+                    <div class="agent-icon" style="background: rgba(168,85,247,0.15); color: var(--purple);">+</div>
                     <div>
-                        <div class="agent-name">Hermes Local</div>
-                        <div class="agent-role">Private & Offline</div>
+                        <div class="agent-name">Your Agent</div>
+                        <div class="agent-role">Custom Worker</div>
                     </div>
                 </div>
-                <p>Runs locally on Ollama. Handles lightweight tasks, offline work, and anything that needs to stay private.</p>
+                <p>Add your own workers. Video generation, data processing, content creation — whatever your workflow needs.</p>
                 <div class="agent-tags">
-                    <span class="tag">Local</span>
-                    <span class="tag">Private</span>
-                    <span class="tag">Offline</span>
+                    <span class="tag">Custom</span>
+                    <span class="tag">Extensible</span>
+                    <span class="tag">Pluggable</span>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- Workflow -->
     <section>
         <div class="section-label">How It Works</div>
         <div class="section-title">From Idea to Shipped</div>
@@ -540,56 +527,74 @@
         </div>
     </section>
     
-    <!-- Capabilities -->
     <section id="capabilities">
-        <div class="section-label">Capabilities</div>
-        <div class="section-title">What We Build</div>
-        <div class="section-desc">From code to content, automation to infrastructure.</div>
+        <div class="section-label">Use Cases</div>
+        <div class="section-title">What You Can Build</div>
+        <div class="section-desc">The framework is model-agnostic. Use any LLM provider for any role.</div>
         
         <div class="cap-grid">
             <div class="cap-card">
                 <h3>🔧 Full-Stack Development</h3>
-                <p>Web apps, APIs, CLI tools, mobile apps. From spec to deployment with automated review.</p>
+                <p>Web apps, APIs, CLI tools. One agent builds, another reviews, a third deploys.</p>
             </div>
             <div class="cap-card">
-                <h3>🎬 AI Video Generation</h3>
-                <p>Automated Higgsfield video generation. Character-driven content, batch production, quality verification.</p>
+                <h3>🎬 Content Pipelines</h3>
+                <p>Video generation, image processing, batch content creation with quality gates.</p>
             </div>
             <div class="cap-card">
-                <h3>📊 Data & Dashboards</h3>
-                <p>Financial data analysis, OpenBB integration, custom dashboards, automated reporting.</p>
+                <h3>📊 Data Workflows</h3>
+                <p>Data collection, analysis, visualization, and automated reporting.</p>
             </div>
             <div class="cap-card">
                 <h3>🤖 Agent Orchestration</h3>
-                <p>Multi-agent systems, task routing, automated workflows, background job scheduling.</p>
+                <p>Multi-model routing, task queuing, parallel execution, retry logic.</p>
             </div>
             <div class="cap-card">
-                <h3>📝 Content & Docs</h3>
-                <p>Technical documentation, presentations, reports, knowledge bases, wikis.</p>
+                <h3>📝 Documentation</h3>
+                <p>Auto-generated docs, API references, knowledge bases, wikis.</p>
             </div>
             <div class="cap-card">
                 <h3>⚡ Automation</h3>
-                <p>Cron jobs, monitoring, automated testing, CI/CD pipelines, scheduled workflows.</p>
+                <p>Cron jobs, monitoring, CI/CD, scheduled workflows, background tasks.</p>
             </div>
         </div>
     </section>
     
-    <!-- CTA -->
+    <section>
+        <div class="section-label">Quick Start</div>
+        <div class="section-title">Get Running in 5 Minutes</div>
+        
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; font-family: monospace; font-size: 0.9rem; line-height: 2; overflow-x: auto;">
+            <div style="color: var(--text-dim);"># Clone the template</div>
+            <div>git clone https://github.com/JKRONIN/agent-template.git</div>
+            <div>cd agent-template</div>
+            <br>
+            <div style="color: var(--text-dim);"># Install</div>
+            <div>npm install</div>
+            <br>
+            <div style="color: var(--text-dim);"># Configure your agents (any LLM provider)</div>
+            <div>cp config.example.yaml config.yaml</div>
+            <div style="color: var(--text-dim);"># Edit config.yaml with your API keys</div>
+            <br>
+            <div style="color: var(--text-dim);"># Run</div>
+            <div>node src/index.js "Build a REST API"</div>
+        </div>
+    </section>
+    
     <div class="cta-section">
         <h2>Ready to Build?</h2>
-        <p>Have a project, an idea, or a problem? The agents are standing by.</p>
+        <p>Fork the template. Add your agents. Start shipping.</p>
         <div class="cta-group">
-            <a href="https://github.com/JKRONIN" class="btn btn-primary" target="_blank">View on GitHub</a>
+            <a href="https://github.com/JKRONIN/agent-template" class="btn btn-primary" target="_blank">Get the Template</a>
+            <a href="https://github.com/JKRONIN/agent-studio" class="btn btn-ghost" target="_blank">View Source</a>
         </div>
     </div>
     
-    <!-- Footer -->
     <footer>
-        <p>Agent Studio — Powered by Hermes Agent × Nous Research</p>
+        <p>Agent Studio — Open Source Multi-Agent Orchestration</p>
     </footer>
     
     <script>
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', e => {
                 e.preventDefault();
@@ -597,7 +602,6 @@
             });
         });
         
-        // Fade-in on scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {

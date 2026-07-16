@@ -1,38 +1,84 @@
 # Agent Studio
 
-A multi-agent AI orchestration system that plans, delegates, built, reviews, and ships — autonomously.
+A framework for multi-agent AI orchestration. One Director plans and delegates. Specialized workers execute. Ship faster with a team of AI agents.
 
-## The Team
+## Architecture
 
-| Agent | Role | Backend |
-|-------|------|---------|
-| **Hermes Director** | Orchestrator & Planner | MiMo Pro |
-| **Claude Code** | Senior Engineer & Reviewer | Claude Opus |
-| **Codex** | Builder & Implementer | GPT-5.5 |
-| **Titan** | Server Operations | VPS |
-| **OpenCode** | Alt Builder | MiMo |
-| **Hermes Local** | Private & Offline | Ollama |
+```
+┌─────────────────────────────────────┐
+│            Director Agent           │
+│      (Plans, Delegates, Reviews)    │
+├──────────┬──────────┬───────────────┤
+│ Builder  │ Reviewer │ Deployer ...  │
+│ (Code)   │ (QA)     │ (Infra)      │
+└──────────┴──────────┴───────────────┘
+```
+
+## Quick Start
+
+```bash
+git clone https://github.com/JKRONIN/agent-template.git
+cd agent-template
+npm install
+cp config.example.yaml config.yaml
+# Edit config.yaml with your API keys
+node src/index.js "Build a REST API"
+```
 
 ## How It Works
 
+1. **Intake** — Understand the request
+2. **Plan** — Break into tasks
+3. **Delegate** — Assign to best-fit worker
+4. **Review** — Verify quality
+5. **Deliver** — Ship and report
+
+## Workers
+
+| Worker | Role |
+|--------|------|
+| Director | Plans, delegates, reviews, reports |
+| Builder | Writes code, builds features |
+| Reviewer | Checks security, performance, style |
+| Deployer | Server ops, CI/CD, infrastructure |
+| Researcher | Gathers info, writes docs |
+| Custom | Add your own workers |
+
+## Adding Workers
+
+```javascript
+class MyWorker extends BaseWorker {
+  async execute(task) {
+    // Your logic here
+    return { content: 'Result' };
+  }
+}
+
+director.registerWorker('my-worker', new MyWorker());
 ```
-Intake → Plan → Delegate → Review → Deliver
+
+## Adding Skills
+
+Create `skills/my-skill.md`:
+
+```markdown
+# Skill: My Skill
+
+## Trigger
+When X happens
+
+## Steps
+1. Do this
+2. Do that
+
+## Output
+Structured result
 ```
 
-The Director receives a goal, breaks it down, assigns work to the best-fit agent, reviews output, and delivers results.
+## Links
 
-## Capabilities
-
-- Full-stack development (web, API, CLI, mobile)
-- AI video generation (Higgsfield automation)
-- Data analysis & dashboards (OpenBB)
-- Agent orchestration & task routing
-- Content & documentation
-- Automation & cron scheduling
-
-## Live Site
-
-🔗 [agent-studio.pages.dev](https://agent-studio.pages.dev) (or GitHub Pages)
+- [Agent Template](https://github.com/JKRONIN/agent-template) — Get started
+- [Live Site](https://jkronin.github.io/agent-studio/) — See it in action
 
 ## License
 
